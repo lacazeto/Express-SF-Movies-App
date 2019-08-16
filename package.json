@@ -1,0 +1,27 @@
+{
+  "name": "express-sf-movies",
+  "version": "1.0.0",
+  "description": "code challenge application",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lacazeto/Express-SF-Movies-App.git"
+  },
+  "author": "lucas cazeto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lacazeto/Express-SF-Movies-App/issues"
+  },
+  "homepage": "https://github.com/lacazeto/Express-SF-Movies-App#readme"
+}
