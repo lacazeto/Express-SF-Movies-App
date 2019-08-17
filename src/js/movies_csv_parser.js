@@ -2,27 +2,38 @@ import fs from 'fs';
 
 export default class MoviesCsvParser {
   constructor() {
-    this.moviesBuffer = this.getData();
+    this.moviesBuffer = this.getCsvData();
     this.movies = this.structureMovies();
   }
 
   structureMovies = () => {
     const movies = {};
-    this.moviesBuffer.forEach((movieData) => {
+    let csvHeader = [];
+
+    this.moviesBuffer.forEach((movieData, index) => {
+      if (index === 0) {
+        csvHeader = movieData.split(',');
+        return;
+      }
+
       const movieDataParsed = movieData.split(',');
       const movieTitle = movieDataParsed[0];
-      movies[movieTitle].movieRelease = movieDataParsed[1];
-      movies[movieTitle].movieLocation = movieDataParsed[2];
-      movies[movieTitle].movieFunFact = movieDataParsed[3];
-      movies[movieTitle].movieProduction = movieDataParsed[4];
-      movies[movieTitle].movieDistributor = movieDataParsed[5];
-      movies[movieTitle].movieDirector = movieDataParsed[6];
-      movies[movieTitle].movieWriter = movieDataParsed[7];
-      movies[movieTitle].movieActor1 = movieDataParsed[8];
-      movies[movieTitle].movieActor2 = movieDataParsed[9];
-      movies[movieTitle].movieActor3 = movieDataParsed[10];
+
+      if (movies[movieTitle] === undefined) {
+        movies[movieTitle] = {};
+        movies[movieTitle].Locations = [];
+      }
+
+      for (let i = 0; i < csvHeader.length; i += 1) {
+        if (csvHeader[i] === 'Locations') {
+          movies[movieTitle].Locations.push(movieDataParsed[i]);
+        } else if (csvHeader[i] !== 'Title') {
+          movies[movieTitle][csvHeader[i]] = movieDataParsed[i];
+        }
+      }
     });
+    return movies;
   };
 }
 
-MoviesCsvParser.prototype.getData = () => fs.readFileSync('./misc/Film_Locations_in_San_Francisco.csv').toString().split('\n');
+MoviesCsvParser.prototype.getCsvData = () => fs.readFileSync('./misc/Film_Locations_in_San_Francisco.csv').toString().split('\n');
