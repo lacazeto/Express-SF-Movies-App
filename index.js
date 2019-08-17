@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 // specifies the root directory from which to serve static assets
-app.use(express.static('views'));
+app.use(express.static('static'));
 
 app.get('/', (_req, res) => {
   res.sendFile('./index.html');
