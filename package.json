@@ -23,7 +23,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node index.js",
-    "build": "babel src -d static"
+    "build": "babel src --out-dir static --source-maps --watch",
+    "devrun": "npm run start && npm build"
   },
   "repository": {
     "type": "git",
