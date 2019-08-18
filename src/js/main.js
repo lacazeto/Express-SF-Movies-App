@@ -1,35 +1,26 @@
+import typeadheadInitializer from './typeahead';
+import initGeocodingListener from './googlemaps';
+
 let moviesList;
 let moviesTitles;
 
-const substringMatcher = (strs) => function findMatches(q, cb) {
-  const matches = [];
-  const substrRegex = new RegExp(q, 'i');
+const fetchMovies = () => $.ajax({ url: '/movies' });
 
-  $.each(strs, (i, str) => {
-    if (substrRegex.test(str)) {
-      matches.push(str);
-    }
-  });
-
-  cb(matches);
-};
-
-const getMovies = () => $.ajax({ url: '/movies' });
+const findMovie = (title) => moviesList[title];
 
 $(() => {
-  $.when(getMovies()).then((data) => {
+  $.when(fetchMovies()).then((data) => {
     moviesList = data;
     moviesTitles = Object.keys(data).filter((word) => word !== '');
 
-    // Using typeahead, more can be found here: https://twitter.github.io/typeahead.js/examples/
-    $('#the-basics .typeahead').typeahead({
-      hint: true,
-      highlight: true,
-      minLength: 1,
-    },
-    {
-      name: 'moviesTitles',
-      source: substringMatcher(moviesTitles),
+    typeadheadInitializer(moviesTitles);
+
+    $('.tt-menu').on('click', '.tt-suggestion.tt-selectable', (el) => {
+      const movieTitle = el.currentTarget.innerText;
+      const movie = findMovie(movieTitle);
+      $(window).trigger('maps.geolocator.add.marker', [movie]);
     });
   });
+
+  initGeocodingListener();
 });
