@@ -1,5 +1,5 @@
 import typeadheadInitializer from './typeahead';
-import * as GoogleMaps from './googlemaps';
+import initGeocodingListener from './googlemaps';
 
 let moviesList;
 let moviesTitles;
@@ -18,7 +18,9 @@ $(() => {
     $('.tt-menu').on('click', '.tt-suggestion.tt-selectable', (el) => {
       const movieTitle = el.currentTarget.innerText;
       const movie = findMovie(movieTitle);
-      $('window').trigger('maps.geolocator.add.marker', movie);
+      $(window).trigger('maps.geolocator.add.marker', [movie]);
     });
   });
+
+  initGeocodingListener();
 });
