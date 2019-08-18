@@ -4,17 +4,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.codeAddress = exports.initMap = void 0;
+exports["default"] = void 0;
 var _window = window,
     map = _window.map;
 
-var initMap = function initMap() {
-  /* codeAddress(address); */
-};
-
-exports.initMap = initMap;
-
-var codeAddress = function codeAddress(address) {
+var addMarker = function addMarker(address) {
+  console.log(address);
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode({
     address: address
@@ -31,22 +26,35 @@ var codeAddress = function codeAddress(address) {
         position: latLng,
         map: map
       });
-      console.log(map);
     } else {
-      console.error("Geocode was not successful for the following reason: ".concat(status));
+      console.error(status);
     }
   });
 };
 
-exports.codeAddress = codeAddress;
+var extractAddresses = function extractAddresses(data) {
+  return data.Locations;
+};
+
+var initGeocodingListener = function initGeocodingListener() {
+  $(window).on('maps.geolocator.add.marker', function (_el, data) {
+    var addresses = extractAddresses(data);
+    addresses.forEach(function (address) {
+      if (address !== null && address !== '') {
+        addMarker(address);
+      }
+    });
+  });
+};
+
+var _default = initGeocodingListener;
+exports["default"] = _default;
 },{}],2:[function(require,module,exports){
 "use strict";
 
 var _typeahead = _interopRequireDefault(require("./typeahead"));
 
-var GoogleMaps = _interopRequireWildcard(require("./googlemaps"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+var _googlemaps = _interopRequireDefault(require("./googlemaps"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -73,10 +81,10 @@ $(function () {
     $('.tt-menu').on('click', '.tt-suggestion.tt-selectable', function (el) {
       var movieTitle = el.currentTarget.innerText;
       var movie = findMovie(movieTitle);
-      console.log(movie);
-      $('window').trigger('maps.geolocator.add.marker', movie);
+      $(window).trigger('maps.geolocator.add.marker', [movie]);
     });
   });
+  (0, _googlemaps["default"])();
 });
 },{"./googlemaps":1,"./typeahead":3}],3:[function(require,module,exports){
 "use strict";
