@@ -26,7 +26,7 @@
     "start": "babel-node index.js",
     "builddev": "babel src --out-dir static --source-maps && browserify static/js/main.js -o static/js/bundle.js && rm static/js/main.js",
     "build": "babel src --out-dir static && browserify static/js/main.js -o static/js/bundle.js && rm static/js/main.js",
-    "devrun": "npm run start && npm build"
+    "devrun": "npm run build && npm run start"
   },
   "repository": {
     "type": "git",
