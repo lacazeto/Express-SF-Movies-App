@@ -24,7 +24,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node index.js",
-    "build": "babel src --out-dir static --source-maps && browserify static/js/main.js -o static/js/bundle.js && rm static/js/main.js",
+    "builddev": "babel src --out-dir static --source-maps && browserify static/js/main.js -o static/js/bundle.js && rm static/js/main.js",
+    "build": "babel src --out-dir static && browserify static/js/main.js -o static/js/bundle.js && rm static/js/main.js",
     "devrun": "npm run start && npm build"
   },
   "repository": {
