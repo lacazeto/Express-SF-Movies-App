@@ -1,7 +1,8 @@
 
 const { map } = window;
 
-const codeAddress = (address) => {
+const addMarker = (address) => {
+  console.log(address);
   const geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address }, (results, status) => {
     console.log(results);
@@ -12,16 +13,22 @@ const codeAddress = (address) => {
         position: latLng,
         map,
       });
-      console.log(map);
     } else {
-      console.error(`Geocode was not successful for the following reason: ${status}`);
+      console.error(status);
     }
   });
 };
 
+const extractAddresses = (data) => data.Locations;
+
 const initGeocodingListener = () => {
   $(window).on('maps.geolocator.add.marker', (_el, data) => {
-    console.log(el, data);
+    const addresses = extractAddresses(data);
+    addresses.forEach((address) => {
+      if (address !== null && address !== '') {
+        addMarker(address);
+      }
+    });
   });
 };
 
