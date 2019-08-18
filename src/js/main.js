@@ -20,7 +20,7 @@ $(() => {
   $.when(getMovies()).then((data) => {
     moviesList = data;
     moviesTitles = Object.keys(data).filter((word) => word !== '');
-    console.log(data, moviesTitles);
+
     // Using typeahead, more can be found here: https://twitter.github.io/typeahead.js/examples/
     $('#the-basics .typeahead').typeahead({
       hint: true,
