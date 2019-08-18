@@ -4,21 +4,28 @@
   "description": "code challenge application",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "babel-eslint": "^10.0.2",
+    "express": "^4.17.1",
+    "standard": "^13.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "babel-core": "^6.26.3",
+    "browserify": "^16.5.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "build": "babel src -d static"
+    "start": "babel-node index.js",
+    "build": "babel src --out-dir static --source-maps && browserify static/js/main.js -o static/js/bundle.js && rm static/js/main.js",
+    "devrun": "npm run start && npm build"
   },
   "repository": {
     "type": "git",
