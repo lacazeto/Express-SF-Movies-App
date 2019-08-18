@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-12 text-center">
         <h1 class="my-5">All locations of movies shot in San Francisco starting from 1924</h1>
-        <h4>Start typing a movie name below to see results.</h3>
+        <h5>Start typing a movie name below to see results and pick one to see in the map.</h5>
       </div>
       <div class="col-8 offset-2 mt-3 text-center">
         <form>
@@ -55,15 +55,23 @@
         </form>
       </div>
     </div>
+    <div class="row">
+      <div id="map" class="my-3"></div>
+      <script>
+        // Initialize and add the map
+        function initMap() {
+          var sanFrancisco = { lat: 37.77919, lng: -122.41914 };
+          var map = new google.maps.Map(document.getElementById('map'), {zoom: 9, center: sanFrancisco});
+        }
+      </script>
+    </div>
   </div>
 
-  <!-- Bootstrap core JavaScript -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm5m2BOZI5mr5r7fZuGnUwM6W9PT4hQIY&callback=initMap" async defer></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-  
   <script src="js/vendor/typeahead.js"></script>
   <script src="js/bundle.js"></script>
-
 </body>
 
 </html>
